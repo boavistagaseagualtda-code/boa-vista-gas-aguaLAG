@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Boa Vista Gás e Água - Lagarto/SE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --vermelho:#d50000;
+  --azul:#0d47a1;
+  --roxo:#8e24aa;
+  --branco:#ffffff;
+}
+
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:#f2f2f2;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--vermelho),var(--azul));
+  color:white;
+  padding:15px;
+  text-align:center;
+}
+
+header h1{
+  margin:5px 0;
+}
+
+header p{
+  margin:0;
+  font-size:14px;
+}
+
+/* SEÇÕES */
+section{
+  padding:15px;
+}
+
+h2{
+  color:var(--azul);
+  border-bottom:2px solid var(--azul);
+  padding-bottom:5px;
+}
+
+/* PRODUTOS */
+.produto{
+  background:white;
+  border-radius:12px;
+  padding:10px;
+  margin:12px 0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.produto img{
+  width:80px;
+  height:80px;
+  object-fit:contain;
+}
+
+.produto-info{
+  flex:1;
+}
+
+.produto-info h3{
+  margin:0;
+  font-size:16px;
+}
+
+.preco{
+  color:var(--vermelho);
+  font-weight:bold;
+  margin:5px 0;
+}
+
+.produto button{
+  background:var(--roxo);
+  color:white;
+  border:none;
+  border-radius:20px;
+  padding:8px 14px;
+  cursor:pointer;
+}
+
+/* CARRINHO */
+#carrinho{
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+#carrinho ul{
+  padding-left:18px;
+}
+
+.finalizar{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  background:#25d366;
+  color:white;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Boa Vista Gás e Água</h1>
+  <p>Lagarto / Sergipe</p>
+  <p>📞 (79) 99986-6031</p>
+</header>
+
+<section>
+  <h2>🔥 Gás</h2>
+
+  <div class="produto">
+    <img src="https://i.imgur.com/7Z0Xy1B.png" alt="Gás 13kg">
+    <div class="produto-info">
+      <h3>Gás de Cozinha 13kg</h3>
+      <div class="preco">R$ 110,00</div>
+    </div>
+    <button onclick="addCarrinho('Gás 13kg - R$110')">Adicionar</button>
+  </div>
+</section>
+
+<section>
+  <h2>💧 Água</h2>
+
+  <div class="produto">
+    <img src="https://i.imgur.com/R7nZxGf.png" alt="Água Indaiá">
+    <div class="produto-info">
+      <h3>Água Indaiá 20L</h3>
+      <div class="preco">R$ 12,00</div>
+    </div>
+    <button onclick="addCarrinho('Água Indaiá 20L - R$12')">Adicionar</button>
+  </div>
+
+  <div class="produto">
+    <img src="https://i.imgur.com/Vz9x7bE.png" alt="Água Lev">
+    <div class="produto-info">
+      <h3>Água Lev 20L</h3>
+      <div class="preco">R$ 9,00</div>
+    </div>
+    <button onclick="addCarrinho('Água Lev 20L - R$9')">Adicionar</button>
+  </div>
+
+  <div class="produto">
+    <img src="https://i.imgur.com/B6u2pKz.png" alt="Água Indiana">
+    <div class="produto-info">
+      <h3>Água Indiana 20L</h3>
+      <div class="preco">R$ 8,00</div>
+    </div>
+    <button onclick="addCarrinho('Água Indiana 20L - R$8')">Adicionar</button>
+  </div>
+</section>
+
+<section id="carrinho">
+  <h2>🛒 Meu Pedido</h2>
+  <ul id="lista"></ul>
+  <button class="finalizar" onclick="finalizarPedido()">Finalizar no WhatsApp</button>
+</section>
+
+<script>
+let carrinho = [];
+
+function addCarrinho(item){
+  carrinho.push(item);
+  renderCarrinho();
+}
+
+function renderCarrinho(){
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
+  carrinho.forEach(i=>{
+    const li = document.createElement("li");
+    li.textContent = i;
+    lista.appendChild(li);
+  });
+}
+
+function finalizarPedido(){
+  if(carrinho.length === 0){
+    alert("Adicione algum produto.");
+    return;
+  }
+
+  let mensagem = "Olá, gostaria de fazer um pedido:%0A";
+  carrinho.forEach(i=>{
+    mensagem += "- " + i + "%0A";
+  });
+
+  const telefone = "5579999866031";
+  window.open(`https://wa.me/${telefone}?text=${mensagem}`, "_blank");
+}
+</script>
+
+</body>
+</html>
