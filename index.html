@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boa Vista Gás e Água</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+}
+header{
+    background:rgba(0,0,0,0.4);
+    padding:20px;
+    text-align:center;
+}
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+.cadastro,.produtos,.carrinho{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:30px;
+}
+input, select{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:none;
+    border-radius:10px;
+}
+.produtos-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+.produto{
+    background:rgba(0,0,0,0.4);
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+.icone{
+    font-size:60px;
+    margin-bottom:10px;
+}
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:30px;
+    background:#00ffcc;
+    color:#003333;
+    font-weight:bold;
+    cursor:pointer;
+}
+button:hover{opacity:0.9}
+ul{list-style:none;padding:0}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Boa Vista Gás e Água</h1>
+<p>Lagarto - SE | WhatsApp: (79) 99986-6031</p>
+</header>
+
+<div class="container">
+
+<div class="cadastro">
+<h2>Dados do Cliente</h2>
+<input id="nome" placeholder="Nome completo">
+<input id="telefone" placeholder="Telefone">
+<input id="endereco" placeholder="Endereço completo">
+
+<select id="pagamento">
+    <option value="">Forma de pagamento</option>
+    <option>Pix</option>
+    <option>Dinheiro</option>
+    <option>Cartão</option>
+</select>
+</div>
+
+<div class="produtos">
+<h2>Produtos</h2>
+<div class="produtos-grid">
+
+<div class="produto">
+<div class="icone">💧</div>
+<h3>Água Indaiá</h3>
+<p>R$ 12,00</p>
+<button onclick="add('Água Indaiá',12)">Adicionar</button>
+</div>
+
+<div class="produto">
+<div class="icone">💧</div>
+<h3>Água Lev</h3>
+<p>R$ 9,00</p>
+<button onclick="add('Água Lev',9)">Adicionar</button>
+</div>
+
+<div class="produto">
+<div class="icone">💧</div>
+<h3>Água Indiana</h3>
+<p>R$ 8,00</p>
+<button onclick="add('Água Indiana',8)">Adicionar</button>
+</div>
+
+<div class="produto">
+<div class="icone">🧯</div>
+<h3>Botijão de Gás</h3>
+<p>R$ 110,00</p>
+<button onclick="add('Botijão de Gás',110)">Adicionar</button>
+</div>
+
+</div>
+</div>
+
+<div class="carrinho">
+<h2>Carrinho</h2>
+<ul id="lista"></ul>
+<p><strong>Total: R$ <span id="total">0</span></strong></p>
+<button onclick="finalizar()">Finalizar no WhatsApp</button>
+</div>
+
+</div>
+
+<script>
+let carrinho=[], total=0;
+
+function add(nome,preco){
+    carrinho.push({nome,preco});
+    total+=preco;
+    atualizar();
+}
+
+function atualizar(){
+    const lista=document.getElementById("lista");
+    lista.innerHTML="";
+    carrinho.forEach(p=>{
+        const li=document.createElement("li");
+        li.textContent=`${p.nome} - R$ ${p.preco}`;
+        lista.appendChild(li);
+    });
+    document.getElementById("total").textContent=total;
+}
+
+function finalizar(){
+    const nome=nomeInput.value;
+    const tel=telefone.value;
+    const end=endereco.value;
+    const pag=pagamento.value;
+
+    if(!nome||!tel||!end||!pag){
+        alert("Preencha todos os dados.");
+        return;
+    }
+
+    let msg=`Pedido - Boa Vista Gás e Água
+Cliente: ${nome}
+Telefone: ${tel}
+Endereço: ${end}
+Pagamento: ${pag}
+
+Produtos:
+`;
+
+    carrinho.forEach(p=>msg+=`- ${p.nome} (R$ ${p.preco})\n`);
+    msg+=`\nTotal: R$ ${total}\n\n🔥 Promoção temporária ativa 🔥`;
+
+    window.open(`https://wa.me/5579999866031?text=${encodeURIComponent(msg)}`);
+}
+</script>
+
+</body>
+</html>
